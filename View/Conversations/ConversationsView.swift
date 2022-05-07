@@ -25,11 +25,7 @@ struct ConversationsView: View {
             ScrollView {
                 VStack(alignment: .leading) {                
                     ForEach(viewModel.recentMessages) { message in
-                        NavigationLink {
-                            ChatView(user: MOCK_USER)
-                        } label: {
-                            ConversationCell(viewModel: MessageViewModel(message))
-                        }
+                        ConversationCell(viewModel: ConversationCellViewModel(message))
                     }
                 }
             }
@@ -51,6 +47,9 @@ struct ConversationsView: View {
             .sheet(isPresented: $showNewMesageView) {
                 NewMessageView(showChatView: $showChatView, user: $selectedUser)
             }
+        }
+        .onAppear {
+            viewModel.fetchRecentMessages()
         }
     }
 }
