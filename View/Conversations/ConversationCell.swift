@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ConversationCell: View {
     let viewModel: MessageViewModel
@@ -20,7 +21,7 @@ struct ConversationCell: View {
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Eddie Brock")
+                    Text(viewModel.user?.fullname ?? "")
                         .font(.system(size: 14, weight: .semibold))
                     
                     Text(viewModel.message.text)
