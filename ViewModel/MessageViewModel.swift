@@ -13,6 +13,7 @@ class MessageViewModel: ObservableObject {
     
     init(_ message: Message) {
         self.message = message
+        fetchUser()
     }
     
     var currentUid: String {
@@ -33,6 +34,18 @@ class MessageViewModel: ObservableObject {
     }
     
     func fetchUser() {
-        
+        COLLECTION_USERS.document(chatPartnerId).getDocument { snapshot, _ in
+            self.user = try? snapshot?.data(as: User.self)
+        }
+    }
+    
+    var chatPartnerProfileImageUrl: URL? {
+        guard let user = user else { return nil }
+        return URL(string: user.profileImageUrl)
+    }
+    
+    var fullname: String {
+        guard let user = user else { return "" }
+        return user.fullname
     }
 }

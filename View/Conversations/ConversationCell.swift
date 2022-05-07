@@ -9,19 +9,19 @@ import SwiftUI
 import Kingfisher
 
 struct ConversationCell: View {
-    let viewModel: MessageViewModel
+    @ObservedObject var viewModel: MessageViewModel
     
     var body: some View {
         VStack {
             HStack {
-                Image("cesar.jpg")
+                KFImage(viewModel.chatPartnerProfileImageUrl)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 48, height: 48)
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(viewModel.user?.fullname ?? "")
+                    Text(viewModel.fullname)
                         .font(.system(size: 14, weight: .semibold))
                     
                     Text(viewModel.message.text)
