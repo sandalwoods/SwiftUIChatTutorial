@@ -31,22 +31,10 @@ struct ConversationsView: View {
             }
             
             //floating button
-            Button {
-                showNewMesageView.toggle()
-            } label: {
-                Image(systemName: "square.and.pencil")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .padding()
-            }
-            .background(Color(.systemBlue))
-            .foregroundColor(.white)
-            .clipShape(Circle())
-            .padding()
-            .sheet(isPresented: $showNewMesageView) {
-                NewMessageView(showChatView: $showChatView, user: $selectedUser)
-            }
+            FloatingButton(show: $showNewMesageView)
+                .sheet(isPresented: $showNewMesageView) {
+                    NewMessageView(showChatView: $showChatView, user: $selectedUser)
+                }
         }
         .onAppear {
             viewModel.fetchRecentMessages()
