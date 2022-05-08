@@ -9,22 +9,34 @@ import SwiftUI
 
 struct SelectGroupMembersView: View {
     @State private var searchText = ""
+    @State private var isEditing = false
+    @ObservedObject var viewModel = SelectGroupMembersViewModel()
+    @Environment(\.presentationMode) private var mode
     
     var body: some View {
         NavigationView {
             VStack {
                 //search bar
-                SearchBar(text: $searchText, isEditing: .constant(false))
+                SearchBar(text: $searchText, isEditing: $isEditing)
+                    .onTapGesture {
+                        isEditing.toggle()
+                    }
                     .padding()
                 
                 //selected users view
-                SelectedGroupMembersView()
+                if !viewModel.selectedUsers.isEmpty {
+                    SelectedGroupMembersView(viewModel: viewModel)
+                }
                 
                 //user list view
                 ScrollView {
                     VStack {
-                        ForEach((0...10), id: \.self) { _ in
-                            SelectableUserCell(selectableUser: SelectableUser(user: MOCK_USER))
+                        ForEach(searchText.isEmpty ? viewModel.selectableUsers : viewModel.filteredUsers(searchText)) { selectableUser in
+                            Button {
+                                viewModel.selectUser(selectableUser, isSelected: !selectableUser.isSelected)
+                            } label: {
+                                SelectableUserCell(viewModel: SelectableUserCellViewModel(selectableUser: selectableUser))
+                            }
                         }
                     }
                 }
@@ -45,11 +57,10 @@ struct SelectGroupMembersView: View {
     }
     var cancelButton: some View {
         Button {
-            print("dismiss view..")
+            mode.wrappedValue.dismiss()
         } label: {
             Text("Cancel")
         }
-
     }
 }
 

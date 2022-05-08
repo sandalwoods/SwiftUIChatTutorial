@@ -6,34 +6,35 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct SelectableUserCell: View {
-    let selectableUser: SelectableUser
+    let viewModel: SelectableUserCellViewModel
     
     var body: some View {
         VStack {
             HStack {
-                Image("cesar.jpg")
+                KFImage(viewModel.profileImageUrl)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 48, height: 48)
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(selectableUser.user.username)
+                    Text(viewModel.username)
                         .font(.system(size: 14, weight: .semibold))
                     
-                    Text(selectableUser.user.fullname)
+                    Text(viewModel.fullname)
                         .font(.system(size: 15))
                 }
                 .foregroundColor(.black)
                 
                 Spacer()
                 
-                Image(systemName: selectableUser.isSelected ? "checkmark.circle.fill" : "circle")
+                Image(systemName: viewModel.selectedImageName)
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(selectableUser.isSelected ? .blue : .gray)
+                    .foregroundColor(viewModel.selectedImageForegroundColor)
                     .frame(width: 20, height: 20)
                     .padding(.trailing)
                 
@@ -41,11 +42,5 @@ struct SelectableUserCell: View {
             .padding(.horizontal)
         }
         .padding(.top)
-    }
-}
-
-struct SelectableUserCell_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectableUserCell(selectableUser: SelectableUser(user: MOCK_USER))
     }
 }
