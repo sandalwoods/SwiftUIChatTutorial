@@ -23,7 +23,7 @@ struct ChannelsView: View {
             //floating button
             FloatingButton(show: $showCreateGroupView)
                 .sheet(isPresented: $showCreateGroupView) {
-                    SelectGroupMembersView()
+                    SelectGroupMembersView(show: $showCreateGroupView)
                 }
         }
     }
