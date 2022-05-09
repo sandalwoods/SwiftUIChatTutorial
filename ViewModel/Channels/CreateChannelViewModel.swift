@@ -29,11 +29,15 @@ class CreateChannelViewModel: ObservableObject {
         if let image = image {
             ImageUploader.uploadImage(image: image) { imageUrl in
                 data["imageUrl"] = imageUrl
+                
+                COLLECTION_CHANNELS.document().setData(data) { _ in
+                    self.didCreateChannel = true
+                }
             }
-        }
-        COLLECTION_CHANNELS.document().setData(data) { _ in
-            print("DEBUG: did upload channel")
-            self.didCreateChannel = true
+        } else {
+            COLLECTION_CHANNELS.document().setData(data) { _ in
+                self.didCreateChannel = true
+            }
         }
     }
 }
