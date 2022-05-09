@@ -13,7 +13,7 @@ struct ChannelCell: View {
     
     var body: some View {
         NavigationLink {
-            Text("channel chat view")
+            ChannelChatView(channel)
         } label: {
             VStack {
                 HStack {
