@@ -27,6 +27,9 @@ struct ChannelsView: View {
                     SelectGroupMembersView(show: $showCreateGroupView)
                 }
         }
+        .onAppear {
+            viewModel.fetchChannels()
+        }
     }
 }
 
