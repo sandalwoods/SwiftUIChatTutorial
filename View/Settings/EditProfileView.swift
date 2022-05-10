@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct EditProfileView: View {
     @State private var fullname = "Eddie Brock"
     @State private var showImagePicker = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
+    @ObservedObject var viewModel: EditProfileViewModel
+    
+    init(_ viewModel: EditProfileViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ZStack {
@@ -30,7 +36,7 @@ struct EditProfileView: View {
                                     .frame(width: 64, height: 64)
                                     .clipShape(Circle())                                
                             } else {
-                                Image("cesar.jpg")
+                                KFImage(URL(string: viewModel.user.profileImageUrl))
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 64, height: 64)
@@ -68,10 +74,10 @@ struct EditProfileView: View {
                         .foregroundColor(.gray)
                     
                     NavigationLink {
-                      StatusSelectorView()
+                      StatusSelectorView(viewModel)
                     } label: {
                         HStack {
-                            Text("at the movies")
+                            Text(viewModel.user.status.title)
                             Spacer()
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.gray)
@@ -91,11 +97,5 @@ struct EditProfileView: View {
     func loadImage() {
         guard let selectImage = selectedImage else { return }
         profileImage = Image(uiImage: selectImage)
-    }
-}
-
-struct EditProfileView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditProfileView()
     }
 }

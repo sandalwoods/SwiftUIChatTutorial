@@ -10,9 +10,10 @@ import FirebaseFirestoreSwift
 struct User: Identifiable, Decodable {
     @DocumentID var id: String?
     let username: String
-    let fullname: String
+    var fullname: String
     let email: String
-    let profileImageUrl: String
+    var profileImageUrl: String
+    var status: UserStatus
 }
 
-let MOCK_USER = User(id: "1234567", username: "test", fullname: "test", email: "test@gmail.com", profileImageUrl: "www.google.com")
+let MOCK_USER = User(id: "1234567", username: "test", fullname: "test", email: "test@gmail.com", profileImageUrl: "www.google.com", status: .available)

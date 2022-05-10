@@ -45,7 +45,8 @@ class AuthViewModel: NSObject, ObservableObject {
             
             let data: [String: Any] = ["email": email,
                                        "username": username,
-                                       "fullname": fullname]
+                                       "fullname": fullname,
+                                       "status": UserStatus.notConfigured.rawValue]
             
             COLLECTION_USERS.document(user.uid).setData(data) { _ in
                 self.tempCurrentUser = user

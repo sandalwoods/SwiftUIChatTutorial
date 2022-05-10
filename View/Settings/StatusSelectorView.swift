@@ -9,7 +9,11 @@ import SwiftUI
 
 struct StatusSelectorView: View {
     
-    @ObservedObject var viewModel = StatusViewModel()
+    @ObservedObject var viewModel: EditProfileViewModel
+    
+    init(_ viewModel: EditProfileViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         ZStack {
@@ -22,7 +26,7 @@ struct StatusSelectorView: View {
                         .foregroundColor(.gray)
                         .padding()
                     
-                    StatusCell(status: viewModel.status)
+                    StatusCell(status: viewModel.user.status)
                     
                     Text("SELECT YOUR STATUS")
                         .foregroundColor(.gray)
@@ -38,12 +42,6 @@ struct StatusSelectorView: View {
                 }
             }
         }
-    }
-}
-
-struct StatusSelectorView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusSelectorView()
     }
 }
 
