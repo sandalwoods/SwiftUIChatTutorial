@@ -38,7 +38,7 @@ struct MainTabView: View {
                 }
                 .navigationTitle(tabTitle)
             }
-        }   
+        } 
     }
     
     var tabTitle: String {

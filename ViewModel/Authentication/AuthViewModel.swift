@@ -18,6 +18,7 @@ class AuthViewModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
+        tempCurrentUser = nil
         userSession = Auth.auth().currentUser
         fetchUser()
     }
@@ -41,7 +42,6 @@ class AuthViewModel: NSObject, ObservableObject {
                 return
             }
             guard let user = result?.user else { return }
-            self.tempCurrentUser = user
             
             let data: [String: Any] = ["email": email,
                                        "username": username,
@@ -59,8 +59,9 @@ class AuthViewModel: NSObject, ObservableObject {
         guard let uid = tempCurrentUser?.uid else { return }
         
         ImageUploader.uploadImage(image: image) { imageUrl in
-            COLLECTION_USERS.document(uid).updateData(["prifoleImageUrl": imageUrl]) { _ in
+            COLLECTION_USERS.document(uid).updateData(["profileImageUrl": imageUrl]) { _ in
                 self.userSession = self.tempCurrentUser
+                self.fetchUser()
             }
         }
     }
